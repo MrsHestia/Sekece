@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAKECE – Sambal Kecepe Asli</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="logo">🌶 SAKECE</div>
+    <div class="menu">
+      <a href="#home">Beranda</a>
+      <a href="#produk">Belanja</a>
+      <a href="#tentang">Tentang</a>
+      <a href="https://wa.me/6281263631265" target="_blank" class="btn-wa">Kontak WA</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">🔥 Pedas Autentik Medan</div>
+      <h1>NIKMAT SENSASI<br>PEDAS MANTUL<br>DI SETIAP SUAPAN</h1>
+      <p>Sambal khas SAKECE dengan rasa autentik, pedas nampol, dan bikin nagih dari suapan pertama.</p>
+      <a href="#produk" class="btn-primary">Pesan Sekarang →</a>
+    </div>
+  </section>
+
+  <!-- PRODUK -->
+  <section class="produk-section" id="produk">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Menu Kami</span>
+        <h2>PRODUK UNGGULAN</h2>
+      </div>
+
+      <div class="produk-grid">
+
+        <!-- LEVEL 1 -->
+        <div class="card" data-aos="fade-up">
+          <div class="card-badge">Best Seller</div>
+          <div class="card-img-wrap">
+            <img src="images/level1.jpeg" alt="Sambal Kecepe Level 1" loading="lazy">
+            <div class="card-img-overlay">
+              <span>🌶 Pedas Ringan</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <h3 class="nama">Sambal Kecepe Level 1</h3>
+            <p class="desc">Pedas ringan dengan rasa gurih dan nikmat. Cocok untuk semua kalangan, teman makan sehari-hari.</p>
+            <div class="harga">Rp 18.000</div>
+
+            <div class="form-group">
+              <label>Jumlah</label>
+              <div class="qty-control">
+                <button class="qty-btn" onclick="changeQty('qty1', -1)">−</button>
+                <input type="number" id="qty1" value="1" min="1" max="99" readonly>
+                <button class="qty-btn" onclick="changeQty('qty1', 1)">+</button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Metode Pembayaran</label>
+              <select id="pay1">
+                <option value="">-- Pilih --</option>
+                <option value="Transfer Bank">Transfer Bank</option>
+                <option value="COD">COD (Bayar di Tempat)</option>
+              </select>
+            </div>
+
+            <button class="btn-checkout" onclick="checkout('Sambal Kecepe Level 1', 18000, 'qty1', 'pay1')">
+              🛒 Checkout via WhatsApp
+            </button>
+          </div>
+        </div>
+
+        <!-- LEVEL 2 -->
+        <div class="card" data-aos="fade-up" data-aos-delay="100">
+          <div class="card-badge fire">Paling Panas 🔥</div>
+          <div class="card-img-wrap">
+            <img src="images/level2.jpeg" alt="Sambal Kecepe Level 2" loading="lazy">
+            <div class="card-img-overlay">
+              <span>🔥 Pedas Ekstrem</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <h3 class="nama">Sambal Kecepe Level 2</h3>
+            <p class="desc">Pedas ekstrem dengan sensasi rempah yang kuat dan bikin ketagihan. Untuk pecinta pedas sejati!</p>
+            <div class="harga">Rp 25.000</div>
+
+            <div class="form-group">
+              <label>Jumlah</label>
+              <div class="qty-control">
+                <button class="qty-btn" onclick="changeQty('qty2', -1)">−</button>
+                <input type="number" id="qty2" value="1" min="1" max="99" readonly>
+                <button class="qty-btn" onclick="changeQty('qty2', 1)">+</button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Metode Pembayaran</label>
+              <select id="pay2">
+                <option value="">-- Pilih --</option>
+                <option value="Transfer Bank">Transfer Bank</option>
+                <option value="COD">COD (Bayar di Tempat)</option>
+              </select>
+            </div>
+
+            <button class="btn-checkout" onclick="checkout('Sambal Kecepe Level 2', 25000, 'qty2', 'pay2')">
+              🛒 Checkout via WhatsApp
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TENTANG -->
+  <section class="tentang" id="tentang">
+    <div class="container">
+      <div class="section-header light">
+        <span class="section-label">Kenali Kami</span>
+        <h2>TENTANG SAKECE</h2>
+      </div>
+      <div class="tentang-grid">
+        <div class="tentang-card">
+          <div class="tentang-icon">🌶️</div>
+          <h3>Level 1 – Ringan & Gurih</h3>
+          <p>Sambal pedas ringan dengan rasa gurih dan nikmat. Cocok dinikmati bersama nasi hangat, ayam goreng, mie, dan berbagai makanan favorit.</p>
+          <ul>
+            <li>✓ Cocok untuk semua kalangan</li>
+            <li>✓ Rasa gurih dan nikmat</li>
+            <li>✓ Teman makan sehari-hari</li>
+          </ul>
+        </div>
+        <div class="tentang-card">
+          <div class="tentang-icon">🔥</div>
+          <h3>Level 2 – Ekstrem & Menggoda</h3>
+          <p>Sambal pedas ekstrem untuk pecinta pedas sejati. Dibuat dari cabai pilihan dan bumbu khas yang menggoda selera.</p>
+          <ul>
+            <li>✓ Pedas lebih terasa</li>
+            <li>✓ Aroma sambal menggoda</li>
+            <li>✓ Cocok pecinta pedas sejati</li>
+          </ul>
+        </div>
+        <div class="tentang-card">
+          <div class="tentang-icon">🚚</div>
+          <h3>Pengiriman & Pembayaran</h3>
+          <p>Tersedia pilihan COD untuk area Medan dan Transfer Bank untuk pengiriman ke luar kota. Proses cepat langsung via WhatsApp.</p>
+          <ul>
+            <li>✓ COD area Medan</li>
+            <li>✓ Transfer Bank</li>
+            <li>✓ Respon cepat via WA</li>
+          </ul>
+        </div>
+        <div class="tentang-card">
+          <div class="tentang-icon">💯</div>
+          <h3>Jaminan Kualitas</h3>
+          <p>Dibuat dari bahan segar pilihan tanpa bahan pengawet berbahaya. Rasa autentik yang selalu konsisten di setiap kemasan.</p>
+          <ul>
+            <li>✓ Bahan segar pilihan</li>
+            <li>✓ Tanpa pengawet berbahaya</li>
+            <li>✓ Rasa konsisten</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Siap Rasakan Pedasnya? 🔥</h2>
+      <p>Pesan sekarang langsung via WhatsApp, respon cepat dan pengiriman mudah!</p>
+      <a href="https://wa.me/6281263631265?text=Halo%20SAKECE%2C%20saya%20mau%20pesan%20sambal!" 
+         target="_blank" class="btn-primary">Chat WhatsApp Sekarang</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-logo">🌶 SAKECE</div>
+      <p>Sambal Kecepe Asli – Pedas Autentik, Bikin Nagih</p>
+      <div class="footer-info">
+        <span>📱 WhatsApp: 081263631265</span>
+        <span>🏠 Medan, Sumatera Utara</span>
+        <span>💳 Transfer Bank & COD</span>
+      </div>
+      <p class="footer-copy">© 2025 SAKECE. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="toast"></div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
