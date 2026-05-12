@@ -1,210 +1,1034 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SAKECE – Sambal Kecepe Asli</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SAKECE — Pedas Autentik Medan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0b0906;
+      --bg2: #130f0a;
+      --red: #E8280B;
+      --orange: #FF6500;
+      --gold: #F5A623;
+      --cream: #F5EFE6;
+      --muted: #7a6f65;
+      --card: #1a1410;
+      --border: rgba(245,239,230,0.07);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--cream);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom cursor */
+    .cursor {
+      width: 12px; height: 12px;
+      background: var(--red);
+      border-radius: 50%;
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.15s ease, width 0.2s, height 0.2s;
+      transform: translate(-50%, -50%);
+    }
+    .cursor-ring {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(232,40,11,0.4);
+      border-radius: 50%;
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9998;
+      transition: transform 0.4s ease;
+      transform: translate(-50%, -50%);
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 40px;
+      background: linear-gradient(to bottom, rgba(11,9,6,0.95) 0%, transparent 100%);
+      backdrop-filter: blur(2px);
+      transition: padding 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(11,9,6,0.97);
+      padding: 16px 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      letter-spacing: 4px;
+      color: var(--cream);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--red); }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--cream); }
+    .nav-cta {
+      background: var(--red);
+      color: var(--cream) !important;
+      padding: 10px 22px;
+      border-radius: 2px;
+      font-weight: 600 !important;
+    }
+    .nav-cta:hover { background: var(--orange); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      padding: 0 40px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 70% 40%, rgba(232,40,11,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 30% 80%, rgba(255,101,0,0.08) 0%, transparent 50%),
+        var(--bg);
+    }
+    .hero-noise {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.4;
+      pointer-events: none;
+    }
+    .hero-line {
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 55%;
+      width: 1px;
+      background: var(--border);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(232,40,11,0.12);
+      border: 1px solid rgba(232,40,11,0.3);
+      padding: 6px 16px;
+      border-radius: 100px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 28px;
+      animation: fadeUp 0.8s ease both;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--red);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.4); }
+    }
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(72px, 10vw, 140px);
+      line-height: 0.88;
+      letter-spacing: 2px;
+      animation: fadeUp 0.8s 0.1s ease both;
+    }
+    .hero h1 .stroke {
+      -webkit-text-stroke: 2px var(--cream);
+      color: transparent;
+    }
+    .hero h1 .fire { color: var(--red); }
+    .hero-sub {
+      margin-top: 28px;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 440px;
+      font-weight: 300;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      margin-top: 44px;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+    .btn-primary {
+      background: var(--red);
+      color: var(--cream);
+      padding: 16px 36px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s, transform 0.15s;
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+    }
+    .btn-primary:hover { background: var(--orange); transform: translateY(-2px); }
+    .btn-ghost {
+      border: 1px solid var(--border);
+      color: var(--cream);
+      padding: 16px 36px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: border-color 0.2s, color 0.2s, transform 0.15s;
+    }
+    .btn-ghost:hover { border-color: var(--cream); transform: translateY(-2px); }
+    .hero-stats {
+      position: absolute;
+      right: 40px;
+      bottom: 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      z-index: 2;
+      animation: fadeUp 0.8s 0.4s ease both;
+    }
+    .stat {
+      text-align: right;
+    }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 42px;
+      color: var(--red);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: fadeUp 1s 0.6s ease both;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--red), transparent);
+      animation: scrollPulse 2s infinite;
+    }
+    @keyframes scrollPulse {
+      0% { transform: scaleY(0); transform-origin: top; }
+      50% { transform: scaleY(1); transform-origin: top; }
+      51% { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* MARQUEE */
+    .marquee-wrap {
+      overflow: hidden;
+      background: var(--red);
+      padding: 14px 0;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee 20s linear infinite;
+    }
+    .marquee-item {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      letter-spacing: 4px;
+      padding: 0 40px;
+      white-space: nowrap;
+      color: rgba(255,255,255,0.85);
+    }
+    .marquee-dot {
+      color: rgba(255,255,255,0.4);
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* PRODUCTS */
+    .section { padding: 100px 40px; }
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 16px;
+      font-family: 'Space Mono', monospace;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: 0.95;
+      margin-bottom: 60px;
+    }
+    .section-title .dim { color: var(--muted); }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2px;
+    }
+    .product-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s;
+      group: true;
+    }
+    .product-card:hover { border-color: rgba(232,40,11,0.4); }
+    .product-card:hover .card-img img { transform: scale(1.05); }
+    .card-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      background: #1e1710;
+      position: relative;
+    }
+    .card-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+      filter: brightness(0.85) saturate(1.2);
+    }
+    .card-img-placeholder {
+      width: 100%; height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 64px;
+      background: linear-gradient(135deg, #1e1510, #2a1a10);
+    }
+    .card-level {
+      position: absolute;
+      top: 16px; left: 16px;
+      background: var(--red);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      font-family: 'Space Mono', monospace;
+    }
+    .card-body { padding: 28px; }
+    .card-heat {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 12px;
+    }
+    .chili {
+      font-size: 16px;
+      opacity: 0.3;
+      transition: opacity 0.2s;
+    }
+    .chili.active { opacity: 1; }
+    .card-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .card-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .card-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      color: var(--gold);
+    }
+    .card-price span {
+      font-size: 14px;
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+    }
+
+    /* ORDER SECTION */
+    .order-section {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 100px 40px;
+    }
+    .order-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .order-form-wrap {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 40px;
+    }
+    .form-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 36px;
+      margin-bottom: 32px;
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+      font-family: 'Space Mono', monospace;
+    }
+    .form-select, .form-input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--cream);
+      padding: 14px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+    .form-select:focus, .form-input:focus { border-color: var(--red); }
+    .qty-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .qty-btn {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--cream);
+      width: 44px; height: 44px;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .qty-btn:hover { background: var(--red); border-color: var(--red); }
+    .qty-input {
+      width: 64px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-left: none;
+      border-right: none;
+      color: var(--cream);
+      text-align: center;
+      padding: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-top: 1px solid var(--border);
+      margin-top: 20px;
+      margin-bottom: 24px;
+    }
+    .total-label { font-size: 13px; color: var(--muted); letter-spacing: 1px; }
+    .total-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      color: var(--gold);
+    }
+    .btn-wa {
+      width: 100%;
+      background: #25D366;
+      color: white;
+      border: none;
+      padding: 18px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      transition: background 0.2s, transform 0.15s;
+      letter-spacing: 0.5px;
+    }
+    .btn-wa:hover { background: #1ebe5e; transform: translateY(-2px); }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .about-img-wrap {
+      position: relative;
+    }
+    .about-img-wrap img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      filter: brightness(0.8) saturate(1.3);
+    }
+    .about-img-placeholder {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: linear-gradient(135deg, #1e1510 0%, #2d1a0d 50%, #1a100a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 80px;
+    }
+    .about-accent {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      width: 80px; height: 80px;
+      background: var(--red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-align: center;
+      line-height: 1.3;
+    }
+    .about-text .section-title { margin-bottom: 24px; }
+    .about-body {
+      font-size: 15px;
+      line-height: 1.9;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+    .about-body strong { color: var(--cream); font-weight: 500; }
+    .perks {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .perk {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .perk-icon {
+      width: 36px; height: 36px;
+      background: rgba(232,40,11,0.12);
+      border: 1px solid rgba(232,40,11,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .perk-text { font-size: 14px; color: var(--muted); line-height: 1.6; }
+    .perk-text strong { color: var(--cream); display: block; margin-bottom: 2px; font-weight: 500; }
+
+    /* FOOTER */
+    footer {
+      padding: 60px 40px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      letter-spacing: 4px;
+    }
+    .footer-logo span { color: var(--red); }
+    .footer-copy {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 1px;
+    }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 1px;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--cream); }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      background: var(--card);
+      border: 1px solid rgba(37,211,102,0.3);
+      color: var(--cream);
+      padding: 16px 24px;
+      font-size: 14px;
+      z-index: 200;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.4s ease;
+      max-width: 300px;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 20px 20px; }
+      nav.scrolled { padding: 14px 20px; }
+      .nav-links { display: none; }
+      .hero { padding: 0 20px 100px; }
+      .hero-stats { display: none; }
+      .section { padding: 70px 20px; }
+      .order-inner { grid-template-columns: 1fr; gap: 40px; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      footer { flex-direction: column; gap: 24px; text-align: center; }
+    }
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+  </style>
 </head>
 <body>
 
-  <!-- NAVBAR -->
-  <nav class="navbar" id="navbar">
-    <div class="logo">🌶 SAKECE</div>
-    <div class="menu">
-      <a href="#home">Beranda</a>
-      <a href="#produk">Belanja</a>
-      <a href="#tentang">Tentang</a>
-      <a href="https://wa.me/6281263631265" target="_blank" class="btn-wa">Kontak WA</a>
-    </div>
-    <button class="hamburger" id="hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="#" class="nav-logo">SA<span>K</span>ECE</a>
+    <ul class="nav-links">
+      <li><a href="#produk">Produk</a></li>
+      <li><a href="#tentang">Tentang</a></li>
+      <li><a href="#pesan" class="nav-cta">Pesan Sekarang</a></li>
+    </ul>
   </nav>
 
   <!-- HERO -->
-  <section class="hero" id="home">
-    <div class="hero-overlay"></div>
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-noise"></div>
+    <div class="hero-line"></div>
+
     <div class="hero-content">
       <div class="hero-badge">🔥 Pedas Autentik Medan</div>
-      <h1>NIKMAT SENSASI<br>PEDAS MANTUL<br>DI SETIAP SUAPAN</h1>
-      <p>Sambal khas SAKECE dengan rasa autentik, pedas nampol, dan bikin nagih dari suapan pertama.</p>
-      <a href="#produk" class="btn-primary">Pesan Sekarang →</a>
+      <h1>
+        NIKMAT<br>
+        <span class="stroke">SENSASI</span><br>
+        <span class="fire">PEDAS</span>
+      </h1>
+      <p class="hero-sub">
+        Sambal khas SAKECE dengan rasa autentik, pedas nampol, dan bikin nagih dari suapan pertama. Dibuat dengan cinta dari Medan.
+      </p>
+      <div class="hero-actions">
+        <a href="#pesan" class="btn-primary">
+          Pesan Sekarang
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#produk" class="btn-ghost">Lihat Menu</a>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">2+</div>
+        <div class="stat-label">Level Kepedasan</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Bahan Asli</div>
+      </div>
+    </div>
+
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      scroll
     </div>
   </section>
 
-  <!-- PRODUK -->
-  <section class="produk-section" id="produk">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">Menu Kami</span>
-        <h2>PRODUK UNGGULAN</h2>
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track" id="marqueeTrack">
+      <div class="marquee-item">SAKECE <span class="marquee-dot">✦</span></div>
+      <div class="marquee-item">PEDAS MANTUL <span class="marquee-dot">✦</span></div>
+      <div class="marquee-item">AUTENTIK MEDAN <span class="marquee-dot">✦</span></div>
+      <div class="marquee-item">SAMBAL KECEPE <span class="marquee-dot">✦</span></div>
+      <div class="marquee-item">BIKIN NAGIH <span class="marquee-dot">✦</span></div>
+      <div class="marquee-item">SAKECE <span class="marquee-dot">✦</span></div>
+      <div class="marquee-item">PEDAS MANTUL <span class="marquee-dot">✦</span></div>
+      <div class="marquee-item">AUTENTIK MEDAN <span class="marquee-dot">✦</span></div>
+      <div class="marquee-item">SAMBAL KECEPE <span class="marquee-dot">✦</span></div>
+      <div class="marquee-item">BIKIN NAGIH <span class="marquee-dot">✦</span></div>
+    </div>
+  </div>
+
+  <!-- PRODUCTS -->
+  <section class="section" id="produk">
+    <div class="section-label">— Menu Kami</div>
+    <h2 class="section-title reveal">PILIH<br><span class="dim">LEVEL KAMU</span></h2>
+    <div class="products-grid reveal">
+
+      <!-- Level 1 -->
+      <div class="product-card">
+        <div class="card-img">
+          <img src="level1.jpeg" alt="Sambal Kecepe Level 1" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="card-img-placeholder" style="display:none">🌶️</div>
+          <div class="card-level">Level 1</div>
+        </div>
+        <div class="card-body">
+          <div class="card-heat">
+            <span class="chili active">🌶️</span>
+            <span class="chili">🌶️</span>
+            <span class="chili">🌶️</span>
+          </div>
+          <div class="card-name">Sambal Kecepe<br>Level 1</div>
+          <p class="card-desc">Pedas ringan dengan rasa gurih dan nikmat. Cocok untuk semua kalangan, teman makan sehari-hari.</p>
+          <div class="card-footer">
+            <div class="card-price">Rp 18.000 <span>/ porsi</span></div>
+            <a href="#pesan" class="btn-primary" style="padding: 10px 20px; font-size: 12px;">Pesan</a>
+          </div>
+        </div>
       </div>
 
-      <div class="produk-grid">
-
-        <!-- LEVEL 1 -->
-        <div class="card" data-aos="fade-up">
-          <div class="card-badge">Best Seller</div>
-          <div class="card-img-wrap">
-            <img src="images/level1.jpeg" alt="Sambal Kecepe Level 1" loading="lazy">
-            <div class="card-img-overlay">
-              <span>🌶 Pedas Ringan</span>
-            </div>
+      <!-- Level 2 -->
+      <div class="product-card">
+        <div class="card-img">
+          <img src="level2.jpeg" alt="Sambal Kecepe Level 2" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="card-img-placeholder" style="display:none">🔥</div>
+          <div class="card-level" style="background: var(--orange);">Level 2</div>
+        </div>
+        <div class="card-body">
+          <div class="card-heat">
+            <span class="chili active">🌶️</span>
+            <span class="chili active">🌶️</span>
+            <span class="chili">🌶️</span>
           </div>
-          <div class="card-body">
-            <h3 class="nama">Sambal Kecepe Level 1</h3>
-            <p class="desc">Pedas ringan dengan rasa gurih dan nikmat. Cocok untuk semua kalangan, teman makan sehari-hari.</p>
-            <div class="harga">Rp 18.000</div>
+          <div class="card-name">Sambal Kecepe<br>Level 2</div>
+          <p class="card-desc">Pedas sedang yang menggigit. Buat kamu yang suka tantangan rasa, level ini bikin ketagihan.</p>
+          <div class="card-footer">
+            <div class="card-price">Rp 20.000 <span>/ porsi</span></div>
+            <a href="#pesan" class="btn-primary" style="padding: 10px 20px; font-size: 12px; background: var(--orange);">Pesan</a>
+          </div>
+        </div>
+      </div>
 
-            <div class="form-group">
-              <label>Jumlah</label>
-              <div class="qty-control">
-                <button class="qty-btn" onclick="changeQty('qty1', -1)">−</button>
-                <input type="number" id="qty1" value="1" min="1" max="99" readonly>
-                <button class="qty-btn" onclick="changeQty('qty1', 1)">+</button>
-              </div>
-            </div>
+    </div>
+  </section>
 
-            <div class="form-group">
-              <label>Metode Pembayaran</label>
-              <select id="pay1">
-                <option value="">-- Pilih --</option>
-                <option value="Transfer Bank">Transfer Bank</option>
-                <option value="COD">COD (Bayar di Tempat)</option>
-              </select>
-            </div>
+  <!-- ORDER -->
+  <section class="order-section" id="pesan">
+    <div class="order-inner">
+      <div class="reveal">
+        <div class="section-label">— Pesan Sekarang</div>
+        <h2 class="section-title">ORDER<br><span class="dim">VIA WA</span></h2>
+        <p style="color: var(--muted); font-size: 15px; line-height: 1.8; margin-bottom: 24px;">
+          Pesan langsung lewat WhatsApp. Cepat, mudah, dan langsung dikonfirmasi oleh tim kami.
+        </p>
+        <div class="perks">
+          <div class="perk">
+            <div class="perk-icon">⚡</div>
+            <div class="perk-text"><strong>Respon Cepat</strong>Konfirmasi order dalam hitungan menit</div>
+          </div>
+          <div class="perk">
+            <div class="perk-icon">🚚</div>
+            <div class="perk-text"><strong>Pengiriman Medan Area</strong>Diantar ke lokasi kamu dengan aman</div>
+          </div>
+          <div class="perk">
+            <div class="perk-icon">💳</div>
+            <div class="perk-text"><strong>Pembayaran Fleksibel</strong>Transfer bank, QRIS, atau COD tersedia</div>
+          </div>
+        </div>
+      </div>
 
-            <button class="btn-checkout" onclick="checkout('Sambal Kecepe Level 1', 18000, 'qty1', 'pay1')">
-              🛒 Checkout via WhatsApp
-            </button>
+      <div class="order-form-wrap reveal">
+        <div class="form-title">Form Pesanan</div>
+
+        <div class="form-group">
+          <label class="form-label">Pilih Produk</label>
+          <select class="form-select" id="produkSelect">
+            <option value="" disabled selected>— Pilih Level —</option>
+            <option value="Sambal Kecepe Level 1" data-price="18000">Sambal Kecepe Level 1 — Rp 18.000</option>
+            <option value="Sambal Kecepe Level 2" data-price="20000">Sambal Kecepe Level 2 — Rp 20.000</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Jumlah</label>
+          <div class="qty-wrap">
+            <button class="qty-btn" id="qtyMinus">−</button>
+            <input class="qty-input" type="number" id="qtyInput" value="1" min="1" max="99" readonly />
+            <button class="qty-btn" id="qtyPlus">+</button>
           </div>
         </div>
 
-        <!-- LEVEL 2 -->
-        <div class="card" data-aos="fade-up" data-aos-delay="100">
-          <div class="card-badge fire">Paling Panas 🔥</div>
-          <div class="card-img-wrap">
-            <img src="images/level2.jpeg" alt="Sambal Kecepe Level 2" loading="lazy">
-            <div class="card-img-overlay">
-              <span>🔥 Pedas Ekstrem</span>
-            </div>
-          </div>
-          <div class="card-body">
-            <h3 class="nama">Sambal Kecepe Level 2</h3>
-            <p class="desc">Pedas ekstrem dengan sensasi rempah yang kuat dan bikin ketagihan. Untuk pecinta pedas sejati!</p>
-            <div class="harga">Rp 25.000</div>
-
-            <div class="form-group">
-              <label>Jumlah</label>
-              <div class="qty-control">
-                <button class="qty-btn" onclick="changeQty('qty2', -1)">−</button>
-                <input type="number" id="qty2" value="1" min="1" max="99" readonly>
-                <button class="qty-btn" onclick="changeQty('qty2', 1)">+</button>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label>Metode Pembayaran</label>
-              <select id="pay2">
-                <option value="">-- Pilih --</option>
-                <option value="Transfer Bank">Transfer Bank</option>
-                <option value="COD">COD (Bayar di Tempat)</option>
-              </select>
-            </div>
-
-            <button class="btn-checkout" onclick="checkout('Sambal Kecepe Level 2', 25000, 'qty2', 'pay2')">
-              🛒 Checkout via WhatsApp
-            </button>
-          </div>
+        <div class="form-group">
+          <label class="form-label">Metode Pembayaran</label>
+          <select class="form-select" id="payMethod">
+            <option value="" disabled selected>— Pilih Metode —</option>
+            <option value="Transfer Bank">Transfer Bank</option>
+            <option value="QRIS">QRIS</option>
+            <option value="COD">COD (Bayar di Tempat)</option>
+          </select>
         </div>
 
+        <div class="form-group">
+          <label class="form-label">Nama Pemesan</label>
+          <input class="form-input" type="text" id="namaInput" placeholder="Nama kamu..." />
+        </div>
+
+        <div class="total-row">
+          <span class="total-label">Total</span>
+          <span class="total-price" id="totalPrice">Rp 0</span>
+        </div>
+
+        <button class="btn-wa" id="btnWa">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Checkout via WhatsApp
+        </button>
       </div>
     </div>
   </section>
 
-  <!-- TENTANG -->
-  <section class="tentang" id="tentang">
-    <div class="container">
-      <div class="section-header light">
-        <span class="section-label">Kenali Kami</span>
-        <h2>TENTANG SAKECE</h2>
+  <!-- ABOUT -->
+  <section class="section" id="tentang">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal">
+        <img src="sekece.jpeg" alt="SAKECE" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="about-img-placeholder" style="display:none">🌶️</div>
+        <div class="about-accent">ASLI<br>MEDAN</div>
       </div>
-      <div class="tentang-grid">
-        <div class="tentang-card">
-          <div class="tentang-icon">🌶️</div>
-          <h3>Level 1 – Ringan & Gurih</h3>
-          <p>Sambal pedas ringan dengan rasa gurih dan nikmat. Cocok dinikmati bersama nasi hangat, ayam goreng, mie, dan berbagai makanan favorit.</p>
-          <ul>
-            <li>✓ Cocok untuk semua kalangan</li>
-            <li>✓ Rasa gurih dan nikmat</li>
-            <li>✓ Teman makan sehari-hari</li>
-          </ul>
-        </div>
-        <div class="tentang-card">
-          <div class="tentang-icon">🔥</div>
-          <h3>Level 2 – Ekstrem & Menggoda</h3>
-          <p>Sambal pedas ekstrem untuk pecinta pedas sejati. Dibuat dari cabai pilihan dan bumbu khas yang menggoda selera.</p>
-          <ul>
-            <li>✓ Pedas lebih terasa</li>
-            <li>✓ Aroma sambal menggoda</li>
-            <li>✓ Cocok pecinta pedas sejati</li>
-          </ul>
-        </div>
-        <div class="tentang-card">
-          <div class="tentang-icon">🚚</div>
-          <h3>Pengiriman & Pembayaran</h3>
-          <p>Tersedia pilihan COD untuk area Medan dan Transfer Bank untuk pengiriman ke luar kota. Proses cepat langsung via WhatsApp.</p>
-          <ul>
-            <li>✓ COD area Medan</li>
-            <li>✓ Transfer Bank</li>
-            <li>✓ Respon cepat via WA</li>
-          </ul>
-        </div>
-        <div class="tentang-card">
-          <div class="tentang-icon">💯</div>
-          <h3>Jaminan Kualitas</h3>
-          <p>Dibuat dari bahan segar pilihan tanpa bahan pengawet berbahaya. Rasa autentik yang selalu konsisten di setiap kemasan.</p>
-          <ul>
-            <li>✓ Bahan segar pilihan</li>
-            <li>✓ Tanpa pengawet berbahaya</li>
-            <li>✓ Rasa konsisten</li>
-          </ul>
+      <div class="about-text reveal">
+        <div class="section-label">— Tentang Kami</div>
+        <h2 class="section-title">DIBUAT<br><span class="dim">DENGAN CINTA</span></h2>
+        <p class="about-body">
+          <strong>SAKECE</strong> lahir dari kecintaan terhadap kuliner pedas autentik Medan. Kami percaya bahwa sambal yang baik bukan hanya soal rasa pedas — tapi soal <strong>kedalaman rasa</strong>, aroma yang menggoda, dan sensasi yang bikin momen makan jadi tak terlupakan.
+        </p>
+        <p class="about-body">
+          Setiap batch dibuat segar dengan bahan-bahan pilihan langsung dari pasar lokal Medan. <strong>Tanpa pengawet. Tanpa bahan kimia.</strong> Hanya pedas yang jujur.
+        </p>
+        <div class="perks">
+          <div class="perk">
+            <div class="perk-icon">🌿</div>
+            <div class="perk-text"><strong>Bahan Segar Pilihan</strong>Langsung dari pasar lokal Medan setiap hari</div>
+          </div>
+          <div class="perk">
+            <div class="perk-icon">🚫</div>
+            <div class="perk-text"><strong>Tanpa Pengawet</strong>100% alami, aman untuk semua usia</div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="cta-section">
-    <div class="container">
-      <h2>Siap Rasakan Pedasnya? 🔥</h2>
-      <p>Pesan sekarang langsung via WhatsApp, respon cepat dan pengiriman mudah!</p>
-      <a href="https://wa.me/6281263631265?text=Halo%20SAKECE%2C%20saya%20mau%20pesan%20sambal!" 
-         target="_blank" class="btn-primary">Chat WhatsApp Sekarang</a>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-logo">🌶 SAKECE</div>
-      <p>Sambal Kecepe Asli – Pedas Autentik, Bikin Nagih</p>
-      <div class="footer-info">
-        <span>📱 WhatsApp: 081263631265</span>
-        <span>🏠 Medan, Sumatera Utara</span>
-        <span>💳 Transfer Bank & COD</span>
-      </div>
-      <p class="footer-copy">© 2025 SAKECE. All rights reserved.</p>
+  <footer>
+    <div class="footer-logo">SA<span>K</span>ECE</div>
+    <div class="footer-copy">© 2025 SAKECE — Pedas Autentik Medan</div>
+    <div class="footer-links">
+      <a href="#produk">Menu</a>
+      <a href="#tentang">Tentang</a>
+      <a href="#pesan">Pesan</a>
     </div>
   </footer>
 
-  <!-- TOAST NOTIFICATION -->
-  <div class="toast" id="toast"></div>
+  <!-- TOAST -->
+  <div class="toast" id="toast">✅ Mengalihkan ke WhatsApp...</div>
 
-  <script src="js/main.js"></script>
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const cursorRing = document.getElementById('cursorRing');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+      setTimeout(() => {
+        cursorRing.style.left = e.clientX + 'px';
+        cursorRing.style.top = e.clientY + 'px';
+      }, 80);
+    });
+    document.querySelectorAll('a, button, select, input').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.transform = 'translate(-50%, -50%) scale(2)';
+        cursor.style.background = 'var(--orange)';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+        cursor.style.background = 'var(--red)';
+      });
+    });
+
+    // Nav scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Order logic
+    const produkSelect = document.getElementById('produkSelect');
+    const qtyInput = document.getElementById('qtyInput');
+    const qtyMinus = document.getElementById('qtyMinus');
+    const qtyPlus = document.getElementById('qtyPlus');
+    const payMethod = document.getElementById('payMethod');
+    const namaInput = document.getElementById('namaInput');
+    const totalPrice = document.getElementById('totalPrice');
+
+    const prices = { 'Sambal Kecepe Level 1': 18000, 'Sambal Kecepe Level 2': 20000 };
+
+    function updateTotal() {
+      const produk = produkSelect.value;
+      const qty = parseInt(qtyInput.value) || 1;
+      const price = prices[produk] || 0;
+      const total = price * qty;
+      totalPrice.textContent = 'Rp ' + total.toLocaleString('id-ID');
+    }
+
+    produkSelect.addEventListener('change', updateTotal);
+    qtyInput.addEventListener('input', updateTotal);
+
+    qtyMinus.addEventListener('click', () => {
+      const v = parseInt(qtyInput.value);
+      if (v > 1) { qtyInput.value = v - 1; updateTotal(); }
+    });
+    qtyPlus.addEventListener('click', () => {
+      const v = parseInt(qtyInput.value);
+      qtyInput.value = v + 1;
+      updateTotal();
+    });
+
+    // Allow URL param to pre-select product
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('produk')) {
+      produkSelect.value = urlParams.get('produk');
+      updateTotal();
+    }
+
+    // WhatsApp checkout
+    document.getElementById('btnWa').addEventListener('click', () => {
+      const produk = produkSelect.value;
+      const qty = qtyInput.value;
+      const bayar = payMethod.value;
+      const nama = namaInput.value.trim();
+
+      if (!produk) { alert('Pilih produk dulu ya!'); return; }
+      if (!bayar) { alert('Pilih metode pembayaran dulu!'); return; }
+
+      const price = prices[produk] * parseInt(qty);
+      const msg = encodeURIComponent(
+        `Halo SAKECE! 🌶️\n\nSaya ingin pesan:\n` +
+        `• Produk: ${produk}\n` +
+        `• Jumlah: ${qty} porsi\n` +
+        `• Metode: ${bayar}\n` +
+        `• Total: Rp ${price.toLocaleString('id-ID')}\n` +
+        (nama ? `• Nama: ${nama}\n` : '') +
+        `\nMohon konfirmasi pesanan saya ya! 🙏`
+      );
+
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+
+      setTimeout(() => {
+        window.open(`https://wa.me/6281234567890?text=${msg}`, '_blank');
+      }, 600);
+    });
+  </script>
 </body>
 </html>
