@@ -127,7 +127,7 @@
     .hero-noise {
       position: absolute;
       inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'%3E%3C/feTurbulence%3E%3C/filter%3E%3Crect width='256' height='256' fill='%230b0906' filter='url(%23noise)'/%3E%3C/svg%3E");
       opacity: 0.4;
       pointer-events: none;
     }
@@ -874,7 +874,7 @@
         </div>
 
         <button class="btn-wa" id="btnWa">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.371.355-.541.355-.06 0-.119-.016-.159-.088-1.327-2.056-2.004-3.467-2.400-4.223-.342-.676-.335-1.143.039-1.646.151-.192.703-.879 1.325-2.079.252-.529.123-.991-.057-1.325-.399-.81-1.415-2.640-1.799-3.359-.168-.32-.374-.267-.641-.267-.045 0-.119.005-.201.01-1.248.081-2.979.515-3.732 2.216-.603 1.33-.313 3.337 1.337 5.829 1.768 2.78 2.114 3.588 2.863 4.876.381.633.905 1.484 1.9 2.315" stroke="currentColor" stroke-width="2"/></svg>
           Checkout via WhatsApp
         </button>
       </div>
@@ -893,7 +893,7 @@
         <div class="section-label">— Tentang Kami</div>
         <h2 class="section-title">DIBUAT<br><span class="dim">DENGAN CINTA</span></h2>
         <p class="about-body">
-          <strong>SAKECE</strong> lahir dari kecintaan terhadap kuliner pedas autentik Medan. Kami percaya bahwa sambal yang baik bukan hanya soal rasa pedas — tapi soal <strong>kedalaman rasa</strong>, aroma yang menggoda, dan sensasi yang bikin momen makan jadi tak terlupakan.
+          <strong>SAKECE</strong> lahir dari kecintaan terhadap kuliner pedas autentik Medan. Kami percaya bahwa sambal yang baik bukan hanya soal rasa pedas — tapi soal <strong>kedalaman rasa, tekstur, dan penuh karakter</strong>.
         </p>
         <p class="about-body">
           Setiap batch dibuat segar dengan bahan-bahan pilihan langsung dari pasar lokal Medan. <strong>Tanpa pengawet. Tanpa bahan kimia.</strong> Hanya pedas yang jujur.
@@ -1000,34 +1000,28 @@
       updateTotal();
     }
 
-    // WhatsApp checkout
+    // WhatsApp button
     document.getElementById('btnWa').addEventListener('click', () => {
       const produk = produkSelect.value;
       const qty = qtyInput.value;
-      const bayar = payMethod.value;
-      const nama = namaInput.value.trim();
+      const payMethod_val = payMethod.value;
+      const nama = namaInput.value;
+      const total = totalPrice.textContent;
 
-      if (!produk) { alert('Pilih produk dulu ya!'); return; }
-      if (!bayar) { alert('Pilih metode pembayaran dulu!'); return; }
+      if (!produk || !payMethod_val || !nama) {
+        alert('Mohon isi semua field terlebih dahulu');
+        return;
+      }
 
-      const price = prices[produk] * parseInt(qty);
-      const msg = encodeURIComponent(
-        `Halo SAKECE! 🌶️\n\nSaya ingin pesan:\n` +
-        `• Produk: ${produk}\n` +
-        `• Jumlah: ${qty} porsi\n` +
-        `• Metode: ${bayar}\n` +
-        `• Total: Rp ${price.toLocaleString('id-ID')}\n` +
-        (nama ? `• Nama: ${nama}\n` : '') +
-        `\nMohon konfirmasi pesanan saya ya! 🙏`
-      );
+      const message = `Halo, saya ingin pesan:\n\nProduk: ${produk}\nJumlah: ${qty}\nMetode Pembayaran: ${payMethod_val}\nNama: ${nama}\nTotal: ${total}`;
+      const waLink = `https://wa.me/081263631265?text=${encodeURIComponent(message)}`;
 
       const toast = document.getElementById('toast');
       toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 3000);
-
       setTimeout(() => {
-        window.open(`https://wa.me/6281234567890?text=${msg}`, '_blank');
-      }, 600);
+        window.open(waLink, '_blank');
+        toast.classList.remove('show');
+      }, 500);
     });
   </script>
 </body>
